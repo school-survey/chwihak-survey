@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>취학관리 업무 현황조사</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_top">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap">
+<style>
+  :root { --line:#000; --head:#f2f2f2; --band:#c1d6ed; --muted:#555; --warn:#b00020; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#eef0f3; color:#000; font-family:"Nanum Myeongjo","Noto Serif KR","AppleMyungjo","Batang","바탕",serif; font-size:16px; line-height:1.8; }
+  .paper { max-width: 880px; margin: 24px auto; background:#fff; padding: 48px 56px; box-shadow:0 1px 4px rgba(0,0,0,.12); }
+  h1 { font-family:"Noto Sans KR",sans-serif; font-size:21px; font-weight:700; text-align:center; margin:0 0 24px; letter-spacing:-.5px; }
+  .box { border:1px solid var(--line); padding:14px 18px; margin: 0 0 14px; }
+  .greet { font-family:"Noto Sans KR",sans-serif; font-size:14.5px; line-height:1.6; }
+  .greet p { margin: 0 0 10px; }
+  .sign { text-align:right; margin-top:14px; }
+  .guide { font-family:"Noto Sans KR",sans-serif; font-size:14px; line-height:1.6; }
+  .guide div { padding-left:1.1em; text-indent:-1.1em; }
+  .band { background:var(--band); border:1px solid var(--line); font-weight:700; font-size:18px; padding:6px 12px; margin: 34px 0 16px; }
+  .q { margin: 0 0 18px; }
+  .q.off { opacity:.35; pointer-events:none; }
+  .qt { padding-left: 1.4em; text-indent:-1.4em; margin-bottom:6px; }
+  .opts { border:1px solid var(--line); padding: 8px 14px; line-height:1.9; }
+  .opts label { display:inline-block; margin-right: 22px; white-space:nowrap; cursor:pointer; }
+  .opts label.long { white-space:normal; display:block; }
+  .opts input[type=radio], .opts input[type=checkbox] { margin-right:4px; transform:translateY(1px); }
+  .line { margin-top:4px; }
+  input.bl { font:inherit; border:0; border-bottom:1px solid #666; width:6em; text-align:center; padding:0 2px; background:#fffbe6; }
+  input.bl.wide { width: 16em; text-align:left; }
+  select.bl { font:inherit; font-size:15px; border:1px solid #999; background:#fffbe6; max-width:100%; }
+  textarea { width:100%; min-height:5.5em; font:inherit; border:0; resize:vertical; background:#fffbe6; }
+  .tw { overflow-x:auto; margin-top:4px; }
+  table { border-collapse:collapse; width:100%; font-size:15px; line-height:1.5; }
+  th, td { border:1px solid var(--line); padding:5px 6px; text-align:center; vertical-align:middle; }
+  th { background:var(--head); font-weight:400; }
+  td.l { text-align:left; }
+  td input.bl { width: 100%; max-width: 7em; }
+  td input.bl.wide { max-width: none; width:100%; }
+  td .ck { display:block; text-align:left; white-space:nowrap; font-size:13.5px; }
+  table.mx td:first-child, table.mx th:first-child { min-width: 7.5em; }
+  table.mx td:nth-child(2), table.mx th:nth-child(2) { min-width: 8.5em; font-size:13px; }
+  table.mx td, table.mx th { min-width: 8em; }
+  table.mx td:last-child { min-width: 10.5em; }
+  table.mx select.bl { width:100%; }
+  .note { font-size:14.5px; color:var(--muted); padding-left:1.1em; text-indent:-1.1em; margin: 0 0 10px; }
+  .req { color:var(--warn); }
+  .bar { position:sticky; bottom:0; background:#fff; border-top:1px solid #ccc; padding:12px 0; text-align:center; margin-top:30px; }
+  button { font-family:"Noto Sans KR",sans-serif; font-size:16px; padding:10px 34px; border:0; background:#1f4e8c; color:#fff; cursor:pointer; }
+  button:disabled { background:#999; }
+  .saved { font-family:"Noto Sans KR",sans-serif; font-size:13px; color:var(--muted); margin-left:12px; }
+  .done { text-align:center; padding: 80px 0; font-family:"Noto Sans KR",sans-serif; font-size:18px; }
+  @media (max-width: 640px) { .paper { padding: 22px 16px; margin:0; } body { font-size:15px; } .opts label { display:block; } }
+  .login { max-width: 460px; margin: 60px auto; background:#fff; padding: 36px 40px; box-shadow:0 1px 4px rgba(0,0,0,.12); font-family:"Noto Sans KR",sans-serif; }
+  .login h2 { font-size:17px; margin:0 0 6px; }
+  .login .t { font-size:14px; color:var(--muted); margin-bottom:18px; }
+  .login label { display:block; font-size:14px; margin:10px 0 4px; }
+  .login input { width:100%; font:inherit; font-size:16px; padding:8px 10px; border:1px solid #999; }
+  .login button { width:100%; margin-top:18px; }
+  .login .pw { position:relative; }
+  .login .pw input { padding-right:44px; }
+  .login button.eye { position:absolute; right:4px; top:50%; transform:translateY(-50%); width:36px; height:32px; margin:0; padding:0; background:transparent; color:#555; border:0; font-size:18px; line-height:1; cursor:pointer; }
+  .login button.eye.on { color:#1f4e8c; }
+  #admin textarea.imp { width:100%; min-height:9em; font:13px/1.5 "Noto Sans KR",monospace; border:1px solid #999; padding:8px; }
+  #admin .impbox { border:1px solid #ccc; padding:12px 14px; margin:12px 0; background:#fafafa; }
+  #admin .impbox .r { margin-top:8px; font-size:13.5px; white-space:pre-wrap; }
+  .login .msg { color:var(--warn); font-size:14px; min-height:1.4em; margin-top:10px; }
+  .login .hint { font-size:13px; color:var(--muted); margin-top:14px; line-height:1.6; }
+  .topbar { position:sticky; top:0; z-index:5; background:#1f4e8c; color:#fff; font-family:"Noto Sans KR",sans-serif; font-size:13.5px; padding:8px 16px; display:flex; gap:14px; align-items:center; }
+  .topbar .who { font-weight:700; }
+  .topbar .st { flex:1; opacity:.92; }
+  .topbar .st.warn { color:#ffd3d3; }
+  .topbar button.sm, button.sm { font-size:13px; padding:4px 12px; background:#fff; color:#1f4e8c; border:1px solid #1f4e8c; }
+  .saved.warn { color:var(--warn); }
+  .bar button.mid { margin-right:14px; vertical-align:middle; }
+  .banner { background:#fff3cd; border:1px solid #e0c060; padding:10px 14px; margin:0 0 18px; font-family:"Noto Sans KR",sans-serif; font-size:14px; }
+  .q.upd { background:#eaf6ea; transition: background 1.5s; }
+  #admin { max-width: 1100px; margin: 24px auto; background:#fff; padding: 28px 32px; box-shadow:0 1px 4px rgba(0,0,0,.12); font-family:"Noto Sans KR",sans-serif; }
+  .ahead { display:flex; gap:12px; align-items:center; font-weight:700; font-size:16px; margin-bottom:10px; }
+  .ahead a.sm { font-size:13px; }
+  table.adm { font-size:13.5px; }
+  table.adm td.ok { color:#1a7f37; font-weight:700; }
+  table.adm button.sm { margin:0 3px; }
+  .note.warn { color:var(--warn); }
+</style>
+</head>
+<body>
+<script>
+/* 구글 밖(GitHub Pages)에서 열릴 때: google.script.run 을 흉내내어 Apps Script 의 doPost 로 보낸다.
+   text/plain 으로 보내 사전 요청(preflight)이 없고, 쿠키를 보내지 않아 구글 계정(/u/N/) 문제가 생기지 않는다. */
+const BACKEND = 'https://script.google.com/macros/s/AKfycby4liZ8wwuShl1IiAdTvP_rNpV8fuZG_i7PRVsRPAFtrTCWr62oWKSjrbSFQHfZojS_/exec';
+(function () {
+  if (window.google && window.google.script && window.google.script.run) return;
+  const call = (fn, args) => fetch(BACKEND, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify({fn: fn, args: args}), redirect: 'follow', credentials: 'omit', cache: 'no-store'})
+    .then(r => r.text())
+    .then(t => { let j; try { j = JSON.parse(t); } catch (e) { throw new Error('서버 응답을 읽지 못했습니다. 잠시 후 다시 시도해 주십시오.'); } if (j && j.ok) return j.result; throw new Error((j && j.error) || '서버 오류'); });
+  const mk = () => { const o = { s: null, f: null };
+    const px = new Proxy(o, { get(t, p) { if (p in t) return t[p]; return (...args) => { call(String(p), args).then(r => { if (o.s) o.s(r); }, e => { if (o.f) o.f(e); else console.error(e); }); }; } });
+    o.withSuccessHandler = fn => { o.s = fn; return px; }; o.withFailureHandler = fn => { o.f = fn; return px; };
+    return px; };
+  window.google = { script: { run: new Proxy({}, { get(_, p) { return mk()[p]; } }) } };
+})();
+</script>
+
+<div class="login" id="login">
+  <h2 id="lhead">기관 로그인</h2>
+  <div class="t" id="ltitle"></div>
+  <label>기관 ID</label><input id="lid" type="text" autocomplete="username" autocapitalize="off" spellcheck="false">
+  <label>접속코드</label>
+  <div class="pw"><input id="lpw" type="password" autocomplete="current-password"><button type="button" class="eye" id="leye" title="접속코드 보기" aria-label="접속코드 보기">&#128065;</button></div>
+  <button id="lbtn">로그인</button>
+  <div class="msg" id="lmsg"></div>
+  <div class="hint">공문으로 받은 기관 ID와 접속코드를 넣으십시오. 같은 ID로 여러 담당자가 들어와 한 설문을 나누어 작성할 수 있으며, 입력 내용은 자동으로 저장됩니다.</div>
+</div>
+<div id="shell" style="display:none">
+  <div class="topbar"><span class="who" id="who"></span><span class="st" id="top"></span><button class="sm" id="out">나가기</button></div>
+  <div class="paper" id="paper"></div>
+  <div id="admin" style="display:none"></div>
+</div>
+<script>
+const ALL = {"SI": {"t": "SI", "label": "시·도교육청", "title": "취학관리 업무 현황조사 설문지(시·도교육청 대상)", "greeting": ["안녕하십니까?", "바쁘신 업무 중에도 취학관리 업무 현황조사에 참여해 주셔서 진심으로 감사드립니다. 본 조사는 전국 시·도교육청 위탁사업인 「취학관리 업무 내실화 지원사업」의 일환으로 취학관리 제도와 업무에 대한 현황을 파악하고 발전방안을 모색하기 위해 실시하고 있습니다. 본 설문에 솔직하고 빠짐없이 응답해 주신다면, 취학관리 업무 개선을 위한 소중한 기초 자료로 활용될 것입니다.", "설문지에 응답하신 내용은 동 연구 이외의 다른 목적으로 이용되지 않음을 약속드립니다. 감사합니다."], "sign": ["2026년 10월", "위탁기관: 경인교육대학교 산학협력단"], "guide": ["조사기준: 조직·운영 현황은 2026년 9월 현재, 실적은 최근 3년간을 기준으로 작성합니다.", "일반 현황·실적은 NEIS·문서대장 등 확인 가능한 행정자료를 기준으로 작성해 주십시오.", "성명·주민등록번호·개인 근무기간 등 개인식별정보는 적지 않으며, 기관 단위 집계 자료만 제출합니다.", "조사기간: 2026년 10월 6일 ~ 10월 18일 (2주)", "조사방법: 각 시·도교육청이 관할 교육지원청 및 학교(표집학교 목록 참조)에 현황 조사 안내 공문과 현황조사 링크를 전달하고, 각 기관은 해당 링크에 접속하여 응답합니다.", "공문으로 받은 기관 ID와 접속코드로 로그인하면 입력 내용이 자동 저장되며, 같은 ID로 다시 들어와 이어서 작성하거나 수정할 수 있습니다. 문항에 따라 응답할 담당자가 다를 경우 기관 ID와 접속코드를 공유하여 해당 문항 담당자가 응답할 수 있습니다.", "문의처: (전화) 031-470-6368 / 이메일 info@kenrollment.com"], "mx": [["관리주체", "radio", ["학교", "교육지원청", "시도교육청", "학교+지원청 공동", "지자체", "교육청+지자체 공동"]], ["최초 확인시점", "radio", ["발생 즉시", "1~2일 이내", "3일 이내", "10일 이후", "교육지원청 이관 후"]], ["정기 확인주기", "radio", ["수시", "월 1회 이상", "분기별 1회", "학기별 1회", "학기별 2회", "반기별 1회", "연 1회"]], ["주요 확인방법", "radio", ["학생 대면", "학생 직접 통화", "영상통화", "보호자 통화", "사진·영상자료", "행정정보공동이용", "재학기관 확인", "가정방문", "경찰 확인"]]], "likert": ["전혀 동의하지 않는다", "동의하지 않는다", "보통이다", "동의한다", "매우 동의한다"], "types": ["입학연기", "예비소집 불참", "미취학", "장기결석", "취학의무 유예", "취학의무 면제"], "items": [{"t": "H", "text": "기본정보"}, {"t": "Q", "no": "1.", "text": "귀 기관명을 적어 주십시오.", "kind": "fill", "opts": [], "other": false, "extra": ["(                    ) 교육청"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "귀 기관의 취학관리 업무 담당 부서명을 적어 주십시오.", "kind": "fill", "opts": [], "other": false, "extra": ["(            )실/국   (            )과   (            )팀"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "취학관리에서 본인이 수행하고 있는 업무를 기술해 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 3, "table": null, "g": null, "zero": false}, {"t": "H", "text": "Ⅰ. 기본현황"}, {"t": "Q", "no": "1.", "text": "귀 기관의 취학관리 담당인력은 총 몇 명입니까?", "kind": "fill", "opts": [], "other": false, "extra": ["총 (      )명   [전담 (      )명,  겸임 (      )명]"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "귀 기관의 취학관리 업무 영역과 담당 부서명, 인력 현황을 적어 주십시오.", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [5, 4, 2, 3], "head": 1, "rows": [["업무 영역", "담당 부서명", "담당 인력수", "직위/직급"], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "취학관리 관련 예산 현황을 재원별로 적어 주십시오(단위: 천원).", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["재원", "2024년", "2025년", "2026년"], ["보통교부금", "", "", ""], ["특별교부금", "", "", ""], ["전입금(자체)", "", "", ""], ["기타", "", "", ""], ["계", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "최근 3개 학년도 동안 담당자 대상 취학관리 교육·연수를 실시하거나 참여한 횟수는 몇 회입니까?", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["구분", "2024학년도", "2025학년도", "2026학년도\n(예정 포함)"], ["실시·참여 횟수", "(      )회", "(      )회", "(      )회"]]}, "g": null, "zero": false}, {"t": "Q", "no": "5.", "text": "(실시·참여한 건수가 있는 경우) 교육·연수의 주요 내용을 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "6.", "text": "향후 취학관리 업무담당자 연수에서 우선적으로 다루어야 할 내용을 3개 선택해 주십시오. (복수응답, 3개 선택)", "kind": "check", "opts": ["취학관리 관련 법령·지침 및 주요 변경사항", "취학관리 대상 유형과 학적 처리 기준", "미취(입)학 아동·학생의 관리 및 보고 절차", "장기결석 학생의 관리 및 보고 절차", "아동(학생)의 소재·안전 확인과 단계별 조치", "아동학대 의심 징후의 판단과 신고·관계기관 연계 절차", "보호자 안내·상담 및 비협조·민원 상황 대응", "지자체·경찰·아동보호기관 등 관계기관의 역할과 협력 절차", "취학관리 전담기구의 구성·운영", "취학관리 관련 업무시스템의 활용과 보고 처리", "특수·복합사례(이주배경학생 등)의 판단과 처리", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": {"max": 3}, "zero": false}, {"t": "Q", "no": "7.", "text": "시·도교육청 자체 취학관리 지침·매뉴얼·계획·업무편람(이하 자체 지침·매뉴얼)을 운영하고 있습니까?", "kind": "radio", "opts": ["자체 지침·매뉴얼 있음(명칭:                         )", "상위 기관 지침을 그대로 활용", "없음"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "H", "text": "Ⅱ. 관리대상 유형별 소재·안전 관리 프로세스"}, {"t": "NOTE", "text": "※ 아래 제시된 관리대상 유형별 소재·안전 관리를 위한 시·도교육청 차원의 관리 현황을 가장 잘 나타내는 응답을 유형마다 칸에서 골라 주십시오."}, {"t": "Q", "no": "", "text": "", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [5, 3, 3, 3, 4], "head": 1, "rows": [["관리대상 유형", "관리주체", "최초\n확인시점", "정기\n확인주기", "주요\n확인방법"], ["입학연기", "", "", "", ""], ["예비소집 불참", "", "", "", ""], ["미취학", "", "", "", ""], ["장기결석", "", "", "", ""], ["취학의무 유예", "", "", "", ""], ["취학의무 면제", "", "", "", ""]], "small": true}, "g": {"type": "matrix"}, "zero": false}, {"t": "H", "text": "Ⅲ. 시·도교육청 취학관리 전담기구 운영 현황"}, {"t": "Q", "no": "1.", "text": "귀 기관은 취학관리 전담기구를 운영(위원 구성, 회의 개최, 유관기관 협력체계 구축 등)하고 있습니까?", "kind": "radio", "opts": ["네", "아니오"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "1-1.", "text": "('① 네'로 응답한 경우) 취학관리 전담기구 위원 현황을 적어 주십시오(단위: 명).", "kind": "table", "opts": [], "other": false, "extra": ["※ 기타는 기관명을 모두 적어 주십시오: (                               )"], "lines": 0, "table": {"cols": [2, 2, 2, 3, 3, 2], "head": 2, "rows": [[{"t": "내부", "cs": 1}, {"t": "외부", "cs": 5}, null, null, null, null], ["교육청", "경찰서", "지자체\n(시·도청)", "학교밖청소년\n지원센터", "아동보호\n전문기관", "기타"], ["", "", "", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "1-2.", "text": "('② 아니오'로 응답한 경우) 취학관리 전담기구가 운영되지 않은 이유는 무엇인지 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "최근 3개 학년도 동안 전담기구 회의를 몇 회 개최하였습니까?", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["구분", "2024학년도", "2025학년도", "2026학년도\n(~현재)"], ["정기회의", "(    )회", "(    )회", "(    )회"], ["수시회의", "(    )회", "(    )회", "(    )회"]]}, "g": null, "zero": false}, {"t": "Q", "no": "2-1.", "text": "(회의를 개최한 경우) 정기·수시회의의 주요 안건을 모두 선택하여 주십시오(복수 응답 가능).", "kind": "check", "opts": ["관리대상 현황 보고", "집중관리대상 선정·해제", "소재 불명 사례 협의", "경찰 수사 의뢰", "유예·면제 사례", "관계기관 협조", "지침·매뉴얼 개정", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "시·도교육청 차원에서 취학의무 이행 현황에 관한 실태조사*를 실시한 적이 있습니까? (*근거: 초중등교육법 시행령 제27조의2제2항제2호)", "kind": "radio", "opts": ["실시", "미실시"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-1.", "text": "('① 실시'로 응답한 경우) 실태조사에서 실제로 확인한 항목을 모두 골라 주십시오.", "kind": "check", "opts": ["대상자 현황", "취학독촉", "유예·면제", "소재확인", "안전확인", "집중관리", "관계기관 협조", "복귀", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-2.", "text": "('① 실시'로 응답한 경우) 실태조사 결과, 교육지원청·학교에 개선·보완을 요구한 사례가 있습니까?", "kind": "radio", "opts": ["있음(      건)", "없음"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-3.", "text": "('① 있음'으로 응답한 경우) 개선·보완에 대한 요구의 주요 내용을 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "교육지원청의 취학관리 전담기구 구성·운영 및 취학관리 업무 수행 현황을 정기적으로 확인·점검합니까? 대상마다 주기를 골라 주십시오.", "kind": "table", "opts": ["월별", "분기", "반기", "연 1회", "수시", "미실시"], "other": false, "extra": [], "lines": 0, "table": {"cols": [6, 4], "head": 1, "rows": [["대상", "확인·점검 주기(번호)"], ["취학관리 전담기구 구성·운영", ""], ["취학관리 업무 수행 현황 확인·점검", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "5.", "text": "학교·교육지원청이 나이스로 보고하는 항목(소재확인 여부·최종확인일·경찰의뢰·복귀·집중관리 등)을 본청은 어떻게 활용합니까?", "kind": "radio", "opts": ["월별 전수 점검", "표본 점검", "문제 사례만 확인", "집계만", "활용하지 않음"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "6.", "text": "2024년부터 현재까지 취학의무 불이행에 대한 과태료 실적은 어떻게 됩니까?", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2], "head": 1, "rows": [["구분", "부과", "징수"], ["2024년", "(    )건", "(    )건"], ["2025년", "(    )건", "(    )건"], ["2026년 현재까지", "(    )건", "(    )건"]]}, "g": null, "zero": false}, {"t": "H", "text": "Ⅳ. 전국 공통 안내 사항에 관한 의견"}, {"t": "Q", "no": "", "text": "소재·안전 확인 주기를 하나로 정한다면 대상별로 어떻게 정하는 것이 적정합니까? 대상마다 현재 주기와 적정 주기를 골라 주십시오.", "kind": "table", "opts": ["월 1회 이상", "분기 1회", "학기별 1회", "기타", "시·도 자율"], "other": false, "extra": ["기타를 고른 경우 내용: (                    )"], "lines": 0, "table": {"cols": [6, 3, 3], "head": 1, "rows": [["대상", "현재 확인 주기(번호)", "적정 주기(번호)"], ["집중관리 대상", "", ""], ["일반관리 대상", "", ""], ["증빙이 확인된 학생\n(예: 미인가 대안교육시설 재학 등)", "", ""]]}, "g": null, "zero": false}, {"t": "H", "text": "Ⅴ. 개방형 응답"}, {"t": "Q", "no": "1.", "text": "취학 관리 업무와 관련하여 아래의 기술에 어느 정도 동의하시는지 표시하여 주시기 바랍니다.", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [1, 11, 2, 2, 2, 2, 2], "head": 1, "rows": [["연번", "내용", "전혀\n동의하지\n않는다", "동의하지\n않는다", "보통\n이다", "동의한다", "매우\n동의한다"], ["1)", "현행 법령과 매뉴얼이 현장에서 발생하는 다양한 사례의 처리기준을 충분히 제시하고 있다.", "①", "②", "③", "④", "⑤"], ["2)", "경찰·지자체 등 관계기관과 필요한 수준의 협조가 이루어지고 있다.", "①", "②", "③", "④", "⑤"], ["3)", "취학관리 업무에 필요한 정보가 관계기관 간 적시에 공유되고 있다.", "①", "②", "③", "④", "⑤"], ["4)", "NEIS 등 정보시스템이 취학관리 업무를 충분히 지원한다.", "①", "②", "③", "④", "⑤"], ["5)", "시·도교육청 취학 관리 업무 담당자를 위한 체계적인 연수가 필요하다.", "①", "②", "③", "④", "⑤"]], "likert": true}, "g": {"type": "likert"}, "zero": false}, {"t": "NOTE", "text": "※ 위의 기술에 대한 동의 정도를 표시할 때 떠올리셨던 문제 상황들을 바탕으로, 다음 문항들에 대해 구체적인 사례를 들어 자세히 답변해 주시기 바랍니다."}, {"t": "Q", "no": "2.", "text": "현재 제공되는 매뉴얼·안내자료에서 향후 보완하거나 추가할 필요가 있는 내용은 무엇입니까?", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "이주배경학생의 취학관리와 관련한 어려움과 그 해결방안은 무엇이라고 생각하는지 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "최근에 직접 경험하거나 접한 취학관리 사례 중, 우수 사례 또는 특수 사례가 있다면 구체적으로 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "5.", "text": "취학관리전담기구의 역할 및 운영과 관련하여 개선이 필요한 사항을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "6.", "text": "취학관리 업무 내실화를 위한 담당자 역량 강화 연수 운영 시, 필요한 핵심 역량과 연수 내용 및 효과적인 운영 방식을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "7.", "text": "기타 취학 관리 내실화를 위해 제안하고 싶은 점을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "8.", "text": "[협조 필요사항] 전담기구 위원 중 취학 관리를 위한 지역사회 네트워크를 만들어 가는 데 함께하면 좋을 분을 추천해 주시기 바랍니다. ※ 소속과 성함, 연락처, 간단한 추천 사유를 적어 주시면 됩니다. ※ 추천해 주신 분의 정보는 위촉·협조 요청 목적으로만 사용되며, 추천 사실은 별도로 알리지 않습니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}]}, "JI": {"t": "JI", "label": "교육지원청", "title": "취학관리 업무 현황조사 설문지(교육지원청 대상)", "greeting": ["안녕하십니까?", "바쁘신 업무 중에도 취학관리 업무 현황조사에 참여해 주셔서 진심으로 감사드립니다. 본 조사는 전국 시·도교육청 위탁사업인 「취학관리 업무 내실화 지원사업」의 일환으로 취학관리 제도와 업무에 대한 현황을 파악하고 발전방안을 모색하기 위해 실시하고 있습니다. 본 설문에 솔직하고 빠짐없이 응답해 주신다면, 취학관리 업무 개선을 위한 소중한 기초 자료로 활용될 것입니다.", "설문지에 응답하신 내용은 동 연구 이외의 다른 목적으로 이용되지 않음을 약속드립니다. 감사합니다."], "sign": ["2026년 10월", "위탁기관: 경인교육대학교 산학협력단"], "guide": ["조사기준: 조직·운영 현황은 2026년 9월 현재, 실적은 최근 3년간을 기준으로 작성합니다.", "일반 현황·실적은 NEIS·문서대장 등 확인 가능한 행정자료를 기준으로 작성해 주십시오.", "성명·주민등록번호·개인 근무기간 등 개인식별정보는 적지 않으며, 기관 단위 집계 자료만 제출합니다.", "조사기간: 2026년 10월 12일 ~ 10월 18일 (1주)", "조사방법: 시·도교육청으로부터 전달받은 현황조사 링크에 접속하여 교육지원청 응답을 작성하여 주시기 바랍니다. 또한, 시·도교육청 공문에 있는 표집학교 중 귀 교육지원청 관내 학교(표집학교 목록 참조)에 현황 조사 안내 공문과 현황조사 링크를 전달하여, 해당 학교가 조사에 참여하도록 협조하여 주시기 바랍니다.", "공문으로 받은 기관 ID와 접속코드로 로그인하면 입력 내용이 자동 저장되며, 같은 ID로 다시 들어와 이어서 작성하거나 수정할 수 있습니다. 문항에 따라 응답할 담당자가 다를 경우 기관 ID와 접속코드를 공유하여 해당 문항 담당자가 응답할 수 있습니다.", "문의처: (전화) 031-470-6368 / 이메일 info@kenrollment.com"], "mx": [["관리주체", "radio", ["학교", "교육지원청", "시도교육청", "학교+지원청 공동", "지자체", "교육청+지자체 공동"]], ["최초 확인시점", "radio", ["발생 즉시", "1~2일 이내", "3일 이내", "10일 이후", "교육지원청 이관 후"]], ["정기 확인주기", "radio", ["수시", "월 1회 이상", "분기별 1회", "학기별 1회", "학기별 2회", "반기별 1회", "연 1회"]], ["주요 확인방법", "radio", ["학생 대면", "학생 직접 통화", "영상통화", "보호자 통화", "사진·영상자료", "행정정보공동이용", "재학기관 확인", "가정방문", "경찰 확인"]]], "likert": ["전혀 동의하지 않는다", "동의하지 않는다", "보통이다", "동의한다", "매우 동의한다"], "types": ["입학연기", "예비소집 불참", "미취학", "장기결석", "취학의무 유예", "취학의무 면제"], "items": [{"t": "H", "text": "기본정보"}, {"t": "Q", "no": "1.", "text": "귀 기관명을 적어 주십시오.", "kind": "fill", "opts": [], "other": false, "extra": ["(                 ) 교육청  (                  ) 교육지원청"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "귀 기관의 취학관리 업무 담당 부서명을 적어 주십시오.", "kind": "fill", "opts": [], "other": false, "extra": ["(            )실/국   (            )과   (            )팀"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "취학관리에서 본인이 수행하고 있는 업무를 기술해 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 3, "table": null, "g": null, "zero": false}, {"t": "H", "text": "Ⅰ. 기본현황"}, {"t": "Q", "no": "1.", "text": "귀 기관의 취학관리 담당인력은 총 몇 명입니까?", "kind": "fill", "opts": [], "other": false, "extra": ["총 (      )명   [전담 (      )명,  겸임 (      )명]"], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "귀 기관의 취학관리 업무 영역과 담당 부서명, 인력 현황을 적어 주십시오.", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [5, 4, 2, 3], "head": 1, "rows": [["업무 영역", "담당 부서명", "담당 인력수", "직위/직급"], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "취학관리 관련 예산 현황을 재원별로 적어 주십시오(단위: 천원).", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["재원", "2024년", "2025년", "2026년"], ["보통교부금", "", "", ""], ["특별교부금", "", "", ""], ["전입금(자체)", "", "", ""], ["기타", "", "", ""], ["계", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "최근 3개 학년도 동안 담당자 대상 취학관리 교육·연수를 실시하거나 참여한 횟수는 몇 회입니까?", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["구분", "2024학년도", "2025학년도", "2026학년도\n(예정 포함)"], ["실시·참여 횟수", "(      )회", "(      )회", "(      )회"]]}, "g": null, "zero": false}, {"t": "Q", "no": "5.", "text": "(실시·참여한 건수가 있는 경우) 교육·연수의 주요 내용을 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "6.", "text": "향후 취학관리 업무담당자 연수에서 우선적으로 다루어야 할 내용을 3개 선택해 주십시오. (복수응답, 3개 선택)", "kind": "check", "opts": ["취학관리 관련 법령·지침 및 주요 변경사항", "취학관리 대상 유형과 학적 처리 기준", "미취(입)학 아동·학생의 관리 및 보고 절차", "장기결석 학생의 관리 및 보고 절차", "아동(학생)의 소재·안전 확인과 단계별 조치", "아동학대 의심 징후의 판단과 신고·관계기관 연계 절차", "보호자 안내·상담 및 비협조·민원 상황 대응", "지자체·경찰·아동보호기관 등 관계기관의 역할과 협력 절차", "취학관리 전담기구의 구성·운영", "취학관리 관련 업무시스템의 활용과 보고 처리", "특수·복합사례(이주배경학생 등)의 판단과 처리", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": {"max": 3}, "zero": false}, {"t": "Q", "no": "7.", "text": "교육지원청 자체 취학관리 지침·매뉴얼·계획·업무편람(이하 자체 지침·매뉴얼)을 운영하고 있습니까?", "kind": "radio", "opts": ["자체 지침·매뉴얼 있음(명칭:                         )", "상위 기관 지침을 그대로 활용", "없음"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "H", "text": "Ⅱ. 교육지원청 취학관리 전담기구 운영 현황"}, {"t": "Q", "no": "1.", "text": "귀 기관은 취학관리 전담기구를 운영(위원 구성, 회의 개최, 유관기관 협력체계 구축 등)하고 있습니까?", "kind": "radio", "opts": ["네", "아니오"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "1-1.", "text": "('① 네'로 응답한 경우) 취학관리 전담기구 위원 현황을 적어 주십시오(단위: 명).", "kind": "table", "opts": [], "other": false, "extra": ["※ 기타는 기관명을 모두 적어 주십시오: (                               )"], "lines": 0, "table": {"cols": [2, 2, 2, 3, 3, 2], "head": 2, "rows": [[{"t": "내부", "cs": 1}, {"t": "외부", "cs": 5}, null, null, null, null], ["교육\n지원청", "경찰서", "지자체\n(시·군·구청)", "학교밖청소년\n지원센터", "아동보호\n전문기관", "기타"], ["", "", "", "", "", ""]]}, "g": null, "zero": false}, {"t": "Q", "no": "1-2.", "text": "('② 아니오'로 응답한 경우) 취학관리 전담기구가 운영되지 않은 이유는 무엇인지 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "2.", "text": "최근 3개 학년도 동안 전담기구 회의를 몇 회 개최하였습니까?", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [3, 2, 2, 2], "head": 1, "rows": [["구분", "2024학년도", "2025학년도", "2026학년도\n(~현재)"], ["정기회의", "(    )회", "(    )회", "(    )회"], ["수시회의", "(    )회", "(    )회", "(    )회"]]}, "g": null, "zero": false}, {"t": "Q", "no": "2-1.", "text": "(회의를 개최한 경우) 정기·수시회의의 주요 안건을 모두 선택하여 주십시오(복수 응답 가능).", "kind": "check", "opts": ["관리대상 현황 보고", "집중관리대상 선정·해제", "소재 불명 사례 협의", "경찰 수사 의뢰", "유예·면제 사례", "관계기관 협조", "지침·매뉴얼 개정", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "교육지원청 차원에서 취학의무 이행 현황에 관한 실태조사*를 실시한 적이 있습니까? (*근거: 초중등교육법 시행령 제27조의2제2항제2호)", "kind": "radio", "opts": ["실시", "미실시"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-1.", "text": "('① 실시'로 응답한 경우) 실태조사에서 실제로 확인한 항목을 모두 골라 주십시오.", "kind": "check", "opts": ["대상자 현황", "취학독촉", "유예·면제", "소재확인", "안전확인", "집중관리", "관계기관 협조", "복귀", "기타"], "other": true, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-2.", "text": "('① 실시'로 응답한 경우) 실태조사 결과, 학교에 개선·보완을 요구한 사례가 있습니까?", "kind": "radio", "opts": ["있음(      건)", "없음"], "other": false, "extra": [], "lines": 0, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3-3.", "text": "('① 있음'으로 응답한 경우) 개선·보완에 대한 요구의 주요 내용을 적어 주십시오.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 2, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "학교의 취학의무 이행 관리 전반 및 의무교육관리위원회 운영 상황을 정기적으로 확인·점검합니까? 대상마다 주기를 골라 주십시오.", "kind": "table", "opts": ["월별", "분기", "반기", "연 1회", "수시", "미실시"], "other": false, "extra": [], "lines": 0, "table": {"cols": [6, 4], "head": 1, "rows": [["대상", "확인·점검 주기(번호)"], ["취학의무 이행 관리 전반", ""], ["의무교육관리위원회 운영 상황", ""]]}, "g": null, "zero": false}, {"t": "H", "text": "Ⅲ. 전국 공통 안내 사항에 관한 의견"}, {"t": "Q", "no": "", "text": "소재·안전 확인 주기를 하나로 정한다면 대상별로 어떻게 정하는 것이 적정합니까? 대상마다 현재 주기와 적정 주기를 골라 주십시오.", "kind": "table", "opts": ["월 1회 이상", "분기 1회", "학기별 1회", "기타", "시·도 자율"], "other": false, "extra": ["기타를 고른 경우 내용: (                    )"], "lines": 0, "table": {"cols": [6, 3, 3], "head": 1, "rows": [["대상", "현재 확인 주기(번호)", "적정 주기(번호)"], ["집중관리 대상", "", ""], ["일반관리 대상", "", ""], ["증빙이 확인된 학생\n(예: 미인가 대안교육시설 재학 등)", "", ""]]}, "g": null, "zero": false}, {"t": "H", "text": "Ⅳ. 개방형 응답"}, {"t": "Q", "no": "1.", "text": "취학 관리 업무와 관련하여 아래의 기술에 어느 정도 동의하시는지 표시하여 주시기 바랍니다.", "kind": "table", "opts": [], "other": false, "extra": [], "lines": 0, "table": {"cols": [1, 11, 2, 2, 2, 2, 2], "head": 1, "rows": [["연번", "내용", "전혀\n동의하지\n않는다", "동의하지\n않는다", "보통\n이다", "동의한다", "매우\n동의한다"], ["1)", "현행 법령과 매뉴얼이 현장에서 발생하는 다양한 사례의 처리기준을 충분히 제시하고 있다.", "①", "②", "③", "④", "⑤"], ["2)", "경찰·지자체 등 관계기관과 필요한 수준의 협조가 이루어지고 있다.", "①", "②", "③", "④", "⑤"], ["3)", "취학관리 업무에 필요한 정보가 관계기관 간 적시에 공유되고 있다.", "①", "②", "③", "④", "⑤"], ["4)", "NEIS 등 정보시스템이 취학관리 업무를 충분히 지원한다.", "①", "②", "③", "④", "⑤"], ["5)", "교육지원청 취학 관리 업무 담당자를 위한 체계적인 연수가 필요하다.", "①", "②", "③", "④", "⑤"]], "likert": true}, "g": {"type": "likert"}, "zero": false}, {"t": "NOTE", "text": "※ 위의 기술에 대한 동의 정도를 표시할 때 떠올리셨던 문제 상황들을 바탕으로, 다음 문항들에 대해 구체적인 사례를 들어 자세히 답변해 주시기 바랍니다."}, {"t": "Q", "no": "2.", "text": "현재 제공되는 매뉴얼·안내자료에서 향후 보완하거나 추가할 필요가 있는 내용은 무엇입니까?", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "3.", "text": "이주배경학생의 취학관리와 관련한 어려움과 그 해결방안은 무엇이라고 생각하는지 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "4.", "text": "최근에 직접 경험하거나 접한 취학관리 사례 중, 우수 사례 또는 특수 사례가 있다면 구체적으로 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "5.", "text": "취학관리전담기구의 역할 및 운영과 관련하여 개선이 필요한 사항을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "6.", "text": "취학관리 업무 내실화를 위한 담당자 역량 강화 연수 운영 시, 필요한 핵심 역량과 연수 내용 및 효과적인 운영 방식을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "7.", "text": "기타 취학 관리 내실화를 위해 제안하고 싶은 점을 기술해 주시기 바랍니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}, {"t": "Q", "no": "8.", "text": "[협조 필요사항] 전담기구 위원이나 업무 수행 중 협조가 활발했던 분 중에서 취학 관리를 위한 지역사회 네트워크를 만들어 가는 데 함께하면 좋을 분을 추천해 주시기 바랍니다. ※ 소속과 성함, 연락처, 간단한 추천 사유를 적어 주시면 됩니다. ※ 추천해 주신 분의 정보는 위촉·협조 요청 목적으로만 사용되며, 추천 사실은 별도로 알리지 않습니다.", "kind": "text", "opts": [], "other": false, "extra": [], "lines": 4, "table": null, "g": null, "zero": false}]}};
+const PAGE = (new URLSearchParams(location.search).get('page') === 'admin' ? 'admin' : 'survey');
+const LABEL = {SI: '시·도교육청', JI: '교육지원청'};
+const TITLE = '취학관리 업무 현황조사 설문지(시·도교육청·교육지원청)';
+let S = null;                                   // 로그인 뒤 대상에 맞는 설문 내용
+const CIRC = '⓪①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮';
+const UNITS = ['명','회','건','개월','일째','일','교','시간','번'];
+const BLANK = /\(\s{2,}\)/;
+const P = document.getElementById('paper');
+let SEC = '', FIELD = 0, SEC_OF = {};
+
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+const bar = el('div', 'bar'); const btn = el('button', '', '최종 제출'); const sv = el('span', 'saved', ''); bar.appendChild(btn); bar.appendChild(sv);
+function key(...a) { return a.filter(x => x).join(' ').replace(/\s+/g, ' ').trim(); }
+
+// 빈칸 「(   )단위」 → 입력칸. opts 가 있고 단위가 「번」이면 선택 목록.
+function fillLine(text, k, opts, forceSelect) {
+  const box = el('span');
+  const parts = text.split(BLANK);
+  parts.forEach((seg, i) => {
+    let rest = seg;
+    if (i > 0) {
+      const m = seg.match(/^([가-힣/]+)/);                // 괄호에 붙은 말: 단위(명·회) 또는 이름(과·팀·교육청)
+      const unit = m ? m[1] : '';
+      const sp = seg.match(/^\s+([가-힣]+)\s*$/);        // 띄어 쓴 이름만 있는 경우: 「(  ) 교육청」
+      let prevSeg = parts[i - 1];
+      const pu = i > 1 ? (parts[i - 1].match(/^[가-힣/]+/) || [''])[0] : '';
+      if (pu) prevSeg = prevSeg.slice(pu.length);          // 앞 칸의 단위는 떼고
+      let prev = prevSeg.replace(/^[\s※\]\[/,]+/, '').replace(/[\s:\[\]/,]+$/, '').trim();
+      if (/^기타는 (.+?)을 모두/.test(prev)) prev = '기타 ' + prev.match(/^기타는 (.+?)을 모두/)[1];
+      if (prev.length > 20) prev = prev.split(/\s+/).slice(-3).join(' ');
+      let label;
+      if (unit && !UNITS.includes(unit)) label = key(k, unit);
+      else if (!unit && sp) label = key(k, sp[1]);
+      else label = key(k, prev || (unit === '번' ? '' : unit));
+      if ((unit === '번' && opts && opts.length) || forceSelect) {
+        box.appendChild(select(label, opts));
+        if (unit === '번') rest = seg.slice(1);
+      } else {
+        const inp = el('input', 'bl' + (UNITS.includes(unit) ? '' : ' wide'));
+        inp.type = UNITS.includes(unit) ? 'number' : 'text';
+        if (inp.type === 'number') { inp.min = 0; inp.step = 'any'; inp.inputMode = 'decimal'; }
+        inp.dataset.k = label + (UNITS.includes(unit) ? '(' + unit + ')' : '');
+        box.appendChild(inp);
+      }
+    }
+    box.appendChild(document.createTextNode(rest));
+  });
+  return box;
+}
+function select(label, opts) {
+  const s = el('select', 'bl'); s.dataset.k = label;
+  s.appendChild(new Option('— 선택 —', ''));
+  opts.forEach((o, i) => s.appendChild(new Option(CIRC[i + 1] + ' ' + o, o)));
+  return s;
+}
+
+// 선택지: 「있음(   건)」 → 선택지 옆 입력칸, 「기타」 → 기타(입력)
+function optLabel(q, o, i, name, type, start) {
+  const lab = el('label');
+  const inp = el('input'); inp.type = type; inp.name = name; inp.value = o.replace(/\s*\(\s{2,}[^()]*\)|\(\s*[^()]*?\s{3,}[^()]*\)/g, '').trim();
+  lab.appendChild(inp);
+  lab.appendChild(document.createTextNode(CIRC[i + start] + ' '));
+  let text = o;
+  if (q.other && i === q.opts.length - 1 && o === '기타') text = '기타(      )';
+  const m = text.match(/\((\s*[^()]*?)\s{3,}([^()]*)\)/) || text.match(/\(\s{2,}\)/);
+  if (m) {
+    const before = text.slice(0, m.index), after = text.slice(m.index + m[0].length);
+    const pre = (m[1] || '').trim(), suf = (m[2] || '').trim();
+    lab.appendChild(document.createTextNode(before + '(' + (pre ? pre + ' ' : '')));
+    const b = el('input', 'bl' + (UNITS.includes(suf) ? '' : ' wide'));
+    b.type = UNITS.includes(suf) ? 'number' : 'text';
+    b.dataset.k = key(name, inp.value, '입력') + (UNITS.includes(suf) ? '(' + suf + ')' : '');
+    b.addEventListener('input', () => { if (b.value) { inp.checked = true; inp.dispatchEvent(new Event('change', {bubbles:true})); } });
+    lab.appendChild(b);
+    lab.appendChild(document.createTextNode((suf ? ' ' + suf : '') + ')' + after));
+    lab.classList.add('long');
+  } else {
+    lab.appendChild(document.createTextNode(text));
+    if (text.length > 22) lab.classList.add('long');
+  }
+  return lab;
+}
+
+function qid(q) { return SEC ? SEC + '-' + q.no.replace(/[.)]$/, '') : q.no.replace(/[.)]$/, ''); }
+
+function renderQ(q) {
+  const d = el('div', 'q');
+  const id = q.no ? qid(q) : SEC;
+  d.dataset.id = id;
+  if (q.no || q.text) d.appendChild(el('div', 'qt', (q.no + ' ' + q.text).trim()));
+  const g = q.g || {};
+  const k = q.kind;
+  const opts = q.opts && q.opts.length ? q.opts : (g.opts || []);
+  if ((k === 'radio' || k === 'check') && q.zero) {
+    return null;                                   // Ⅱ 보기: 표의 드롭다운에 다 들어 있음
+  } else if (k === 'radio' || k === 'check') {
+    const box = el('div', 'opts');
+    const start = (q.zero && q.opts[0] === '해당 없음') ? 0 : 1;
+    q.opts.forEach((o, i) => box.appendChild(optLabel(q, o, i, id, k === 'radio' ? 'radio' : 'checkbox', start)));
+    box.dataset.group = id; box.dataset.type = k;
+    if (k === 'check' && g.max) box.addEventListener('change', ev => { if (ev.target.type === 'checkbox' && ev.target.checked && box.querySelectorAll('input[type=checkbox]:checked').length > g.max) { ev.target.checked = false; alert(g.max + '개까지만 고를 수 있습니다.'); } });
+    q.extra.forEach(e => { const ln = el('div', 'line'); ln.appendChild(fillLine(e, id, opts)); box.appendChild(ln); });
+    d.appendChild(box);
+  } else if (k === 'rank') {
+    const box = el('div', 'opts');
+    const ln = el('div', '');
+    ['1순위', '2순위', '3순위'].forEach(r => { ln.appendChild(document.createTextNode(r + ' ')); ln.appendChild(select(key(id, r), q.opts)); ln.appendChild(document.createTextNode('   ')); });
+    box.appendChild(ln); d.appendChild(box);
+  } else if (k === 'fill') {
+    const box = el('div', 'opts');
+    q.extra.forEach(e => { const ln = el('div', 'line'); ln.appendChild(fillLine(e, id, opts, !!(g.opts && e.indexOf('번') >= 0))); box.appendChild(ln); });
+    d.appendChild(box);
+  } else if (k === 'text') {
+    const box = el('div', 'opts'); const ta = el('textarea'); ta.dataset.k = id; box.appendChild(ta); d.appendChild(box);
+  } else if (k === 'table') {
+    d.appendChild(table(q, id, opts));
+    q.extra.forEach(e => { const ln = el('div', 'line'); ln.appendChild(fillLine(e, id, opts)); d.appendChild(ln); });
+  }
+  // 「(N번으로 이동)」 → 이동 대상 문항 전까지 흐리게
+  const jump = (q.opts || []).map(o => (o.match(/\((\d+)번으로 이동\)/) || [])[1]).find(x => x);
+  if (jump) d.addEventListener('change', ev => {
+    if (ev.target.name !== id) return;
+    const sel = d.querySelector('input[name="' + id + '"]:checked');
+    const off = !!(sel && /번으로 이동/.test(sel.parentNode.textContent));
+    for (let n = d.nextElementSibling; n && n.classList.contains('q'); n = n.nextElementSibling) {
+      if (n.dataset.id === SEC_OF[id] + '-' + jump) break;
+      n.classList.toggle('off', off);
+    }
+  });
+  SEC_OF[id] = SEC;
+  return d;
+}
+
+function table(q, id, opts) {
+  const tb = q.table, rows = tb.rows, head = tb.head;
+  const w = el('div', 'tw'); const t = el('table'); w.appendChild(t);
+  const hdr = rows[head - 1].map(c => (typeof c === 'string' ? c : (c && c.t) || '').replace(/\n/g, ''));
+  const isMx = (q.g || {}).type === 'matrix', isLk = (q.g || {}).type === 'likert';
+  if (isMx) t.className = 'mx';
+  rows.forEach((r, ri) => {
+    const tr = el('tr');
+    const isHead = ri < head;
+    let rowLabel = '';
+    r.forEach((c, ci) => {
+      if (c === null) return;
+      const cell = el(isHead ? 'th' : 'td');
+      const txt = typeof c === 'string' ? c : (c.t || '');
+      if (typeof c === 'object' && c) { if (c.cs) cell.colSpan = c.cs; if (c.rs) cell.rowSpan = c.rs; }
+      if (isHead) { cell.innerHTML = ''; txt.split('\n').forEach((s, i) => { if (i) cell.appendChild(el('br')); cell.appendChild(document.createTextNode(s)); }); tr.appendChild(cell); return; }
+      const col = hdr[ci] || '';
+      if (ci === 0 && txt && !BLANK.test(txt)) rowLabel = txt;
+      let rl = /^(인원\(명\)|건수\(3개 학년도 합계\))$/.test(rowLabel) ? '' : rowLabel;
+      if (!rowLabel && rows.length - head > 1) rl = (ri - head + 1) + '행';
+      const k = key(id, rl === txt ? '' : rl, col.replace(/\(.*?\)/g, '').trim() || col);
+      if (isLk) {
+        if (ci < 2) { cell.textContent = txt; if (ci === 1) cell.className = 'l'; }
+        else { const r2 = el('input'); r2.type = 'radio'; r2.name = key(id, r[0]); r2.value = S.likert[ci - 2]; cell.appendChild(r2); }
+      } else if (isMx && ci >= r.length - S.mx.length) {
+        const [name, kind, mo] = S.mx[ci - (r.length - S.mx.length)];
+        const nk = key('Ⅱ', rowLabel, name.split('(')[0]);
+        if (kind === 'check') {
+          const nm = nk;
+          mo.forEach((o, i) => { const l = el('label', 'ck'); const cb = el('input'); cb.type = 'checkbox'; cb.name = nm; cb.value = o; l.appendChild(cb); l.appendChild(document.createTextNode(' ' + o)); cell.appendChild(l); });
+          cell.dataset.group = nm; cell.dataset.type = 'check';
+        } else {
+          const s = el('select', 'bl'); s.dataset.k = nk; s.appendChild(new Option('— 선택 —', ''));
+          const st = mo[0] === '해당 없음' ? 0 : 1;
+          mo.forEach((o, i) => s.appendChild(new Option(CIRC[i + st] + ' ' + (o.startsWith('증빙(') ? '증빙 학생 별도 주기' : o), o)));
+          cell.appendChild(s);
+        }
+      } else if (txt === '' || BLANK.test(txt)) {
+        if (col.indexOf('번호') >= 0 && opts.length) cell.appendChild(select(k, opts));
+        else if (col.indexOf('예·아니오') >= 0) cell.appendChild(select(k, ['예', '아니오']));
+        else if (/부서명|직위|기준일|업무 영역|기관명|명칭|복수/.test(col)) { const i2 = el('input', 'bl wide'); i2.type = 'text'; i2.dataset.k = k; cell.appendChild(i2); }
+        else {
+          const um = txt.match(/\(\s+\)\s*([가-힣]+)/);
+          const unit = um ? um[1] : ((q.text.match(/단위: ([가-힣]+)/) || [])[1] || (/\(명\)/.test(col) || /\(명\)/.test(rowLabel) ? '명' : ''));
+          const i2 = el('input', 'bl'); i2.type = 'number'; i2.min = 0; i2.step = 'any'; i2.inputMode = 'decimal';
+          i2.dataset.k = k + (unit ? '(' + unit + ')' : '');
+          cell.appendChild(i2);
+          if (um) cell.appendChild(document.createTextNode(' ' + um[1]));
+        }
+      } else { cell.textContent = txt; if (txt.length > 14) cell.className = 'l'; }
+      tr.appendChild(cell);
+    });
+    t.appendChild(tr);
+  });
+  return w;
+}
+
+// ── 그리기(로그인 뒤 대상에 맞춰) ──
+function draw(t) {
+S = ALL[t]; P.innerHTML = ''; SEC = ''; FIELD = 0; SEC_OF = {};
+P.appendChild(el('h1', '', S.title));
+const g = el('div', 'box greet');
+S.greeting.forEach(x => g.appendChild(el('p', '', x)));
+const sg = el('div', 'sign'); S.sign.forEach(x => sg.appendChild(el('div', '', x))); g.appendChild(sg);
+P.appendChild(g);
+const gd = el('div', 'box guide'); gd.appendChild(el('div', '', '※ 작성 안내'));
+S.guide.forEach(x => gd.appendChild(el('div', '', '○ ' + x)));
+gd.appendChild(el('div', '', '○ 입력 내용은 자동으로 저장되어, 같은 기관 ID로 로그인한 다른 담당자도 이어서 작성할 수 있습니다. 끝까지 작성한 뒤 맨 아래 「최종 제출」을 눌러 주십시오(기관당 한 번).'));
+P.appendChild(gd);
+S.items.forEach(it => {
+  if (it.t === 'H') { P.appendChild(el('div', 'band', it.text)); SEC = it.text === '기본정보' ? '' : it.text.split('.')[0]; if (it.text === '기본정보') SEC = '기본정보'; return; }
+  if (it.t === 'NOTE') {
+    let tx = it.text;
+    if (tx.indexOf('자기 기관 기준으로 답합니다') >= 0)
+      tx = '※ 귀 기관 기준으로, 관리대상 유형마다 표의 칸에서 골라 주십시오. 직접 하지 않는 업무는 「⓪ 해당 없음」을 고릅니다.' + (tx.indexOf('고교 행') >= 0 ? ' 고교 행은 「초·중등교육법 시행령」 제92조의2에 따른 대상이며, 해당 기관만 답합니다.' : '');
+    P.appendChild(el('div', 'note', tx)); return;
+  }
+  const node = renderQ(it); if (node) P.appendChild(node);
+});
+P.appendChild(bar); FIELDS = fields(); TOTAL = FIELDS.size;
+}
+
+
+// ── 모으기 ──
+function collect() {
+  const out = [], seen = new Set();
+  const used = {};
+  const push = (k, v) => { used[k] = (used[k] || 0) + 1; out.push([used[k] > 1 ? k + ' (' + used[k] + ')' : k, v]); };
+  P.querySelectorAll('input, select, textarea').forEach(e => {
+    const skipped = !!e.closest('.q.off');               // 건너뛴 문항은 빈 값
+    if (e.type === 'radio' || e.type === 'checkbox') {
+      const n = e.name; if (!n || seen.has(n)) return; seen.add(n);
+      const vs = [...P.querySelectorAll('input[name="' + CSS.escape(n) + '"]:checked')].map(x => x.value);
+      push(n, skipped ? '' : vs.join(', '));
+    } else if (e.dataset.k) { push(e.dataset.k, skipped ? '' : e.value.trim()); }
+  });
+  return out;
+}
+/** 칸 이름 → 입력 요소들. collect() 와 같은 순서·같은 이름 규칙. */
+function fields() {
+  const m = new Map(), used = {}, seen = new Set();
+  P.querySelectorAll('input, select, textarea').forEach(e => {
+    let k;
+    if (e.type === 'radio' || e.type === 'checkbox') { if (!e.name || seen.has(e.name)) return; seen.add(e.name); k = e.name; }
+    else if (e.dataset.k) k = e.dataset.k; else return;
+    used[k] = (used[k] || 0) + 1;
+    m.set(used[k] > 1 ? k + ' (' + used[k] + ')' : k, e);
+  });
+  return m;
+}
+let FIELDS = new Map(), TOTAL = 0;   // draw() 뒤에 채워짐
+function setField(k, v) {
+  const e = FIELDS.get(k); if (!e) return;
+  if (e.type === 'radio' || e.type === 'checkbox') {
+    const vs = v ? v.split(', ') : [];
+    P.querySelectorAll('input[name="' + CSS.escape(e.name) + '"]').forEach(x => { x.checked = vs.includes(x.value); });
+  } else e.value = v;
+}
+function getField(k) {
+  const e = FIELDS.get(k); if (!e) return '';
+  if (e.type === 'radio' || e.type === 'checkbox') return [...P.querySelectorAll('input[name="' + CSS.escape(e.name) + '"]:checked')].map(x => x.value).join(', ');
+  return e.value.trim();
+}
+function applyAll(obj) {
+  FIELDS.forEach((e, k) => setField(k, obj[k] == null ? '' : String(obj[k])));
+  P.querySelectorAll('input[type=radio]:checked').forEach(e => e.dispatchEvent(new Event('change', {bubbles:true})));
+}
+
+// ── 서버 저장(칸 단위 병합) ──
+const SS_KEY = 'chwihak-login-v4';
+let LS = '';                                             // 'chwihak-survey-' + 대상: 이 컴퓨터 임시 사본(서버가 안 될 때 대비, v3 작성분 이어받기)
+let TOKEN = '', ME = null, BASE = new Map(), inflight = false, pending = false, tmr = null, poll = null, readonly = false;
+const emsg = e => String(e && e.message || e).replace(/^Error:\s*/, '');   // Apps Script 가 붙이는 'Error: ' 머리 제거
+const now = () => new Date().toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'});
+function setStatus(t, warn) { sv.textContent = t; sv.classList.toggle('warn', !!warn); topMsg.textContent = t; topMsg.classList.toggle('warn', !!warn); }
+function changes() { return collect().filter(p => (BASE.has(p[0]) ? BASE.get(p[0]) : '') !== p[1]); }
+/** 서버 상태를 화면에 반영. 내가 고치는 중인 칸(서버에 아직 안 보낸 칸)은 건드리지 않는다. */
+function applyState(st, mine) {
+  const data = st.data || {};
+  const focus = document.activeElement;
+  let others = 0;
+  FIELDS.forEach((e, k) => {
+    const srv = data[k] == null ? '' : String(data[k]);
+    const old = BASE.has(k) ? BASE.get(k) : '';
+    if (srv === old) return;                               // 서버에서 바뀐 게 없음
+    if (mine && mine.has(k)) return;                       // 방금 내가 보낸 칸
+    const cur = getField(k);
+    if (cur !== old) return;                               // 내가 고치는 중(아직 안 보냄) → 다음 저장 때 내 값이 올라감
+    if (e === focus || (e.type && (e.type === 'radio' || e.type === 'checkbox') && focus && focus.name === e.name)) return;
+    setField(k, srv); others++;
+    const q = e.closest('.q'); if (q) { q.classList.add('upd'); setTimeout(() => q.classList.remove('upd'), 2500); }
+  });
+  BASE = new Map(Object.keys(data).map(k => [k, data[k] == null ? '' : String(data[k])]));
+  if (others) P.querySelectorAll('input[type=radio]:checked').forEach(e => e.dispatchEvent(new Event('change', {bubbles:true})));
+  if (st.submitted && !readonly) lockSubmitted(st.receipt);
+  return others;
+}
+function pushSave() {
+  if (readonly || !TOKEN || (ME && ME.role === '관리자')) return;   // 관리자 보기 화면은 저장하지 않음
+  if (inflight) { pending = true; return; }
+  const ch = changes();
+  if (!ch.length) return;
+  inflight = true; setStatus('저장 중…');
+  try { localStorage.setItem(LS, JSON.stringify(collect())); } catch (e) {}
+  google.script.run
+    .withSuccessHandler(st => {
+      inflight = false;
+      const n = applyState(st, new Set(ch.map(c => c[0])));
+      setStatus('저장됨 ' + now() + ' (버전 ' + st.ver + ')' + (n ? ' · 다른 담당자가 고친 칸 ' + n + '개를 가져왔습니다' : ''));
+      if (pending) { pending = false; pushSave(); }
+    })
+    .withFailureHandler(err => {
+      inflight = false;
+      if (/로그인이 필요|로그인 시간|로그인 정보|없는 계정/.test(emsg(err))) { setStatus(emsg(err), true); return logout(true); }
+      if (/이미 제출/.test(emsg(err))) { setStatus(emsg(err), true); return refresh(); }
+      setStatus('저장 실패: ' + emsg(err) + ' — 잠시 후 다시 시도합니다', true);
+      setTimeout(pushSave, 8000);
+    })
+    .saveDraft(TOKEN, ch, TOTAL);
+}
+function refresh() {
+  if (!TOKEN || inflight || document.hidden) return;
+  google.script.run
+    .withSuccessHandler(st => {
+      if (inflight) return;
+      const n = applyState(st, null);
+      if (n && !st.submitted) setStatus('다른 담당자가 고친 칸 ' + n + '개를 가져왔습니다 ' + now());
+    })
+    .withFailureHandler(err => { if (/로그인이 필요|로그인 시간|로그인 정보|없는 계정/.test(emsg(err))) logout(true); })
+    .load(TOKEN);
+}
+function lockSubmitted(rc) {
+  try { midBtn.style.display = 'none'; } catch (e) {}
+  readonly = true;
+  P.querySelectorAll('input, select, textarea').forEach(e => { e.disabled = true; });
+  btn.style.display = 'none';
+  setStatus('제출 완료(접수번호 ' + rc + '). 수정이 필요하면 연구진에 문의해 주십시오.');
+  const b = el('div', 'banner', '이 기관의 설문은 이미 제출되었습니다(접수번호 ' + rc + '). 내용은 볼 수만 있습니다.');
+  P.insertBefore(b, P.firstChild);
+}
+P.addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(pushSave, 1200); });
+P.addEventListener('change', () => { clearTimeout(tmr); tmr = setTimeout(pushSave, 400); });
+window.addEventListener('beforeunload', ev => { if (TOKEN && !readonly && (inflight || pending || changes().length)) { ev.preventDefault(); ev.returnValue = ''; } });
+
+// ── 로그인 ──
+const L = document.getElementById('login');
+const lid = document.getElementById('lid'), lpw = document.getElementById('lpw'), lbtn = document.getElementById('lbtn'), lmsg = document.getElementById('lmsg');
+const who = document.getElementById('who'), topMsg = document.getElementById('top'), out = document.getElementById('out');
+document.getElementById('ltitle').textContent = TITLE;
+if (PAGE === 'admin') { document.getElementById('lhead').textContent = '관리자 로그인'; lid.value = 'admin'; }
+function doLogin() {
+  lmsg.textContent = ''; lbtn.disabled = true; lbtn.textContent = '확인 중…';
+  google.script.run
+    .withSuccessHandler(r => {
+      lbtn.disabled = false; lbtn.textContent = '로그인';
+      if (PAGE === 'admin' && r.role !== '관리자') { lmsg.textContent = '관리자 계정이 아닙니다.'; return; }
+      if (PAGE !== 'admin' && r.role === '관리자') { lmsg.textContent = '관리자 계정은 설문 작성에 쓸 수 없습니다. 주소 뒤에 ?page=admin 을 붙여 관리자 화면으로 들어가십시오.'; return; }
+      try { sessionStorage.setItem(SS_KEY, JSON.stringify({token: r.token, id: r.id, name: r.name, role: r.role, target: r.target})); } catch (e) {}
+      enter(r, r.state);
+    })
+    .withFailureHandler(err => { lbtn.disabled = false; lbtn.textContent = '로그인'; lmsg.textContent = emsg(err); })
+    .login(lid.value, lpw.value);
+}
+lbtn.addEventListener('click', doLogin);
+document.getElementById('leye').addEventListener('click', ev => { const b = ev.currentTarget; const show = lpw.type === 'password'; lpw.type = show ? 'text' : 'password'; b.classList.toggle('on', show); b.title = show ? '접속코드 감추기' : '접속코드 보기'; lpw.focus(); });
+lpw.addEventListener('keydown', ev => { if (ev.key === 'Enter') doLogin(); });
+lid.addEventListener('keydown', ev => { if (ev.key === 'Enter') lpw.focus(); });
+function logout(expired) {
+  TOKEN = ''; clearInterval(poll); poll = null;
+  try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
+  document.getElementById('shell').style.display = 'none'; L.style.display = '';
+  lpw.value = ''; lmsg.textContent = expired ? '로그인 시간이 지났습니다. 다시 로그인하면 저장된 내용이 그대로 열립니다.' : '';
+}
+out.addEventListener('click', () => {
+  if (!readonly && (inflight || pending || changes().length)) { if (!confirm('아직 저장되지 않은 칸이 있을 수 있습니다. 그래도 나가시겠습니까?')) return; }
+  logout(false);
+});
+// ── 중간 저장 후 나가기 ──
+const midBtn = el('button', 'sm mid', '중간 저장 후 나가기'); midBtn.id = 'midBtn'; btn.id = 'submitBtn'; bar.insertBefore(midBtn, btn);
+midBtn.addEventListener('click', () => {
+  if (readonly || !TOKEN) return logout(false);
+  clearTimeout(tmr); midBtn.disabled = true; midBtn.textContent = '저장 중…';
+  const reset = () => { midBtn.disabled = false; midBtn.textContent = '중간 저장 후 나가기'; };
+  pushSave();
+  let waited = 0;
+  const w = setInterval(() => {
+    waited += 300;
+    if (!inflight && !pending && !changes().length) { clearInterval(w); reset(); alert('저장되었습니다. 같은 기관 ID로 다시 로그인하면 이어서 작성할 수 있습니다.'); logout(false); return; }
+    if (waited >= 30000) { clearInterval(w); reset(); alert('저장이 확인되지 않았습니다. 잠시 후 다시 눌러 주십시오.'); }
+  }, 300);
+});
+// ── 기본정보 1번 자동 채우기 ──
+const SIDO_OF_PREFIX = {seoul: '서울특별시교육청', 'gwangju-jeonnam': '전남광주통합특별시교육청', busan: '부산광역시교육청', daegu: '대구광역시교육청', incheon: '인천광역시교육청', daejeon: '대전광역시교육청', ulsan: '울산광역시교육청', sejong: '세종특별자치시교육청', gyeonggi: '경기도교육청', gangwon: '강원특별자치도교육청', chungbuk: '충청북도교육청', chungnam: '충청남도교육청', jeonbuk: '전북특별자치도교육청', gyeongbuk: '경상북도교육청', gyeongnam: '경상남도교육청', jeju: '제주특별자치도교육청'};
+function autoFill_(r) {
+  const set = (k, v) => { const e = FIELDS.get(k); if (e && !e.value && v) { e.value = v; e.dispatchEvent(new Event('input', {bubbles: true})); } };
+  const name = String(r.name || '').trim();
+  if (r.target === 'SI') { set('기본정보-1 교육청', name.replace(/교육청$/, '')); return; }
+  if (r.target !== 'JI') return;
+  const pre = String(r.id || '').replace(/-\d+$/, '');
+  const sido = (SIDO_OF_PREFIX[pre] || '').replace(/교육청$/, '');
+  set('기본정보-1 교육청', sido);
+  let ji = name; if (sido && ji.indexOf(sido) === 0) ji = ji.slice(sido.length);
+  set('기본정보-1 교육지원청', ji.replace(/교육지원청$/, ''));
+}
+function enter(r, st) {
+  TOKEN = r.token; ME = r;
+  L.style.display = 'none'; document.getElementById('shell').style.display = '';
+  who.textContent = r.name + ' (' + r.id + ')' + (r.target ? ' · ' + LABEL[r.target] + ' 설문' : '');
+  if (PAGE === 'admin') { P.style.display = 'none'; A.style.display = ''; return loadAdmin(); }
+  P.style.display = ''; A.style.display = 'none';
+  draw(r.target); LS = 'chwihak-survey-' + r.target;
+  // 서버에 답변이 하나도 없고 이 컴퓨터에 v3 때 적어 둔 임시 사본이 있으면 이어받을지 묻는다
+  let local = null; try { local = JSON.parse(localStorage.getItem(LS) || 'null'); } catch (e) {}
+  const empty = !st || !Object.keys(st.data || {}).some(k => st.data[k]);
+  BASE = new Map();
+  applyAll(st && st.data ? st.data : {});
+  BASE = new Map(Object.keys(st && st.data ? st.data : {}).map(k => [k, String(st.data[k])]));
+  if (st && st.submitted) lockSubmitted(st.receipt);
+  else {
+    if (empty && local && local.length && local.some(p => p[1]) && confirm('이 컴퓨터에 이전에 작성하던 내용이 남아 있습니다. 불러와서 이어서 작성할까요?')) {
+      applyAll(Object.fromEntries(local)); setTimeout(pushSave, 100);
+    }
+    autoFill_(r);
+    setStatus(st && st.savedAt ? '마지막 저장 ' + st.savedAt + ' (버전 ' + st.ver + ')' : '아직 저장된 내용이 없습니다. 입력하면 자동으로 저장됩니다.');
+    poll = setInterval(refresh, 20000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  }
+  window.scrollTo(0, 0);
+}
+// 새로 고쳐도 로그인 유지
+(function () {
+  let s = null; try { s = JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); } catch (e) {}
+  if (!s || !s.token || (PAGE === 'admin') !== (s.role === '관리자')) return;
+  lbtn.disabled = true; lbtn.textContent = '이전 로그인 확인 중…';
+  if (s.role === '관리자') { lbtn.disabled = false; lbtn.textContent = '로그인'; return enter(s, null); }
+  google.script.run
+    .withSuccessHandler(st => { lbtn.disabled = false; lbtn.textContent = '로그인'; enter(s, st); })
+    .withFailureHandler(() => { lbtn.disabled = false; lbtn.textContent = '로그인'; try { sessionStorage.removeItem(SS_KEY); } catch (e) {} })
+    .load(s.token);
+})();
+
+// ── 제출 ──
+btn.addEventListener('click', () => {
+  const data = collect();
+  const org = data.filter(p => p[0].startsWith('기본정보')).every(p => p[1]);
+  if (!org) { alert('기본정보(소속·부서)를 먼저 적어 주십시오.'); window.scrollTo(0, 0); return; }
+  const empty = data.filter(p => !p[1]).length;
+  if (!confirm((empty ? '비어 있는 칸이 ' + empty + '개 있습니다. 해당 없으면 비워 두셔도 됩니다.\n' : '') + '최종 제출하면 더 고칠 수 없습니다(수정은 연구진에 문의). 제출하시겠습니까?')) return;
+  btn.disabled = true; btn.textContent = '제출 중…'; clearTimeout(tmr); pending = false;
+  const go = () => google.script.run
+    .withSuccessHandler(rc => {
+      if (!rc) { btn.disabled = false; btn.textContent = '최종 제출'; alert('저장이 확인되지 않았습니다. 다시 눌러 주십시오.'); return; }
+      try { localStorage.setItem(LS + '-sent', JSON.stringify({rc: rc, data: data})); localStorage.removeItem(LS); } catch (e) {}
+      readonly = true; clearInterval(poll);
+      P.innerHTML = ''; const dn = el('div', 'done', '제출되었습니다. 조사에 참여해 주셔서 감사합니다.');
+      dn.appendChild(el('div', 'saved', '접수번호 ' + rc + ' (문의하실 때 알려 주십시오)'));
+      P.appendChild(dn); window.scrollTo(0, 0); })
+    .withFailureHandler(err => { btn.disabled = false; btn.textContent = '최종 제출'; alert('제출하지 못했습니다.\n' + emsg(err)); if (/이미 제출/.test(emsg(err))) refresh(); })
+    .submit(TOKEN, data);
+  if (inflight) { const w = setInterval(() => { if (!inflight) { clearInterval(w); go(); } }, 300); } else go();
+});
+
+// ── 관리자 화면 ──
+const A = document.getElementById('admin');
+function loadAdmin() {
+  A.innerHTML = ''; A.appendChild(el('div', 'ahead', '기관별 진행 현황 — 불러오는 중…'));
+  google.script.run
+    .withSuccessHandler(r => {
+      A.innerHTML = '';
+      const h = el('div', 'ahead'); h.appendChild(el('span', '', TITLE + ' — 기관별 진행 현황 (' + r.rows.length + '개 기관)'));
+      const rb = el('button', 'sm', '새로 고침'); rb.addEventListener('click', loadAdmin); h.appendChild(rb);
+      const tb = el('button', 'sm', '응답 탭 정리'); tb.title = '대상 탭·원자료 탭의 시험 줄을 지우고 1행을 문항 순서로 새로 씁니다';
+      tb.addEventListener('click', () => {
+        tb.disabled = true;
+        google.script.run.withSuccessHandler(r => {
+          const c = Object.entries(r.counts).map(([k, v]) => k + ' ' + v + '줄').join(' · ');
+          if (!confirm('응답 탭의 답변 줄을 모두 지우고 1행(열 이름)을 문항 순서대로 새로 씁니다.\n지금 들어 있는 답변 줄: ' + c + '\n\n시험 제출만 있을 때 쓰십시오. 진행하시겠습니까?')) { tb.disabled = false; return; }
+          google.script.run.withSuccessHandler(() => { tb.disabled = false; alert('정리했습니다. 「응답 시트 열기」로 확인하십시오.'); }).withFailureHandler(err => { tb.disabled = false; alert('실패: ' + emsg(err)); }).adminResetTabs(TOKEN, true);
+        }).withFailureHandler(err => { tb.disabled = false; alert('실패: ' + emsg(err)); }).adminResetTabs(TOKEN, false);
+      }); h.appendChild(tb);
+      const ib = el('button', 'sm', '계정 일괄 등록'); ib.addEventListener('click', () => { const box = document.getElementById('impbox'); box.style.display = box.style.display === 'none' ? '' : 'none'; }); h.appendChild(ib);
+      const lk = el('a', 'sm', '응답 시트 열기'); lk.href = r.sheetUrl; lk.target = '_blank'; h.appendChild(lk);
+      A.appendChild(h);
+      const done = r.rows.filter(x => x.submitted).length, going = r.rows.filter(x => !x.submitted && x.ver > 0).length;
+      A.appendChild(el('div', 'note', '제출 ' + done + ' · 작성 중 ' + going + ' · 미착수 ' + (r.rows.length - done - going) + '   (제출된 답변은 응답 시트의 「시·도교육청」·「교육지원청」 탭에 한 기관 한 줄로 있습니다)'));
+      const box = el('div', 'impbox'); box.id = 'impbox'; box.style.display = 'none';
+      box.appendChild(el('div', '', '엑셀 「계정탭 붙여넣기」 시트에서 2행부터 A~D열(대상 · 기관ID · 기관명 · 접속코드)을 복사해 아래에 붙여 넣고 「등록」을 누르십시오. 접속코드 칸을 비우면 자동으로 만듭니다. 이미 있는 기관ID 는 건너뜁니다.'));
+      const ta = el('textarea', 'imp'); ta.placeholder = '시·도교육청\tseoul\t서울특별시교육청\t7M3FEVGK'; box.appendChild(ta);
+      const go = el('button', 'sm', '등록'); const rs = el('div', 'r', '');
+      go.addEventListener('click', () => {
+        const rows = ta.value.split(/\r?\n/).map(l => l.split(/\t|,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x => x.replace(/^"|"$/g, '').trim())).filter(r => r.some(x => x));
+        if (!rows.length) { rs.textContent = '붙여 넣은 내용이 없습니다.'; return; }
+        go.disabled = true; rs.textContent = rows.length + '줄 등록 중…';
+        google.script.run
+          .withSuccessHandler(r => { go.disabled = false; rs.textContent = '등록 ' + r.added + '건 · 접속코드 발급 ' + r.issued + '건' + (r.skipped.length ? '\n이미 있어 건너뜀 ' + r.skipped.length + '건: ' + r.skipped.slice(0, 20).join(', ') + (r.skipped.length > 20 ? ' …' : '') : '') + (r.bad.length ? '\n잘못된 줄 ' + r.bad.length + '건(대상·기관ID·기관명 확인):\n' + r.bad.slice(0, 10).join('\n') : ''); if (r.added) { ta.value = ''; setTimeout(loadAdmin, 800); } })
+          .withFailureHandler(err => { go.disabled = false; rs.textContent = '실패: ' + emsg(err); })
+          .adminImport(TOKEN, rows);
+      });
+      box.appendChild(go); box.appendChild(rs); A.appendChild(box);
+      const t = el('table', 'adm'); const tr = el('tr');
+      ['대상', '기관명', '기관ID', '진행(답한 칸/전체)', '마지막 저장', '저장 횟수', '상태', '접수번호', ''].forEach(x => tr.appendChild(el('th', '', x))); t.appendChild(tr);
+      r.rows.forEach(x => {
+        const row = el('tr');
+        row.appendChild(el('td', '', x.label || '')); row.appendChild(el('td', 'l', x.name)); row.appendChild(el('td', '', x.id));
+        row.appendChild(el('td', '', x.total ? x.filled + ' / ' + x.total + ' (' + Math.round(100 * x.filled / x.total) + '%)' : (x.ver ? String(x.filled) : '—')));
+        row.appendChild(el('td', '', x.savedAt || '—')); row.appendChild(el('td', '', x.ver || '—'));
+        row.appendChild(el('td', x.submitted ? 'ok' : '', x.submitted ? '제출' : (x.ver ? '작성 중' : '미착수')));
+        row.appendChild(el('td', '', x.receipt || '—'));
+        const act = el('td');
+        if (x.ver) { const v = el('button', 'sm', '보기'); v.addEventListener('click', () => viewOrg(x)); act.appendChild(v); }
+        if (x.submitted) { const u = el('button', 'sm', '제출 해제'); u.addEventListener('click', () => unlockOrg(x)); act.appendChild(u); }
+        row.appendChild(act); t.appendChild(row);
+      });
+      const w = el('div', 'tw'); w.appendChild(t); A.appendChild(w);
+    })
+    .withFailureHandler(err => { A.innerHTML = ''; A.appendChild(el('div', 'note warn', emsg(err))); if (/로그인이 필요|로그인 시간|로그인 정보|없는 계정/.test(emsg(err))) logout(true); })
+    .adminList(TOKEN);
+}
+function unlockOrg(x) {
+  if (!confirm(x.name + '(' + x.id + ')의 제출을 해제합니다. 기관이 다시 고쳐서 제출하면 응답 시트의 같은 줄이 덮어써집니다. 계속할까요?')) return;
+  google.script.run.withSuccessHandler(loadAdmin).withFailureHandler(err => alert(emsg(err))).adminUnlock(TOKEN, x.id);
+}
+function viewOrg(x) {
+  google.script.run
+    .withSuccessHandler(st => {
+      A.style.display = 'none'; P.style.display = '';
+      draw(x.target);
+      applyAll(st.data || {});
+      P.querySelectorAll('input, select, textarea').forEach(e => { e.disabled = true; });
+      btn.style.display = 'none';
+      const b = el('div', 'banner'); b.appendChild(document.createTextNode('[관리자 보기] ' + x.name + ' (' + x.id + ') — ' + (st.submitted ? '제출됨 ' + st.receipt : '작성 중') + ', 마지막 저장 ' + (st.savedAt || '—') + '  '));
+      const back = el('button', 'sm', '목록으로'); back.addEventListener('click', () => { P.style.display = 'none'; A.style.display = ''; }); b.appendChild(back);
+      P.insertBefore(b, P.firstChild); window.scrollTo(0, 0);
+    })
+    .withFailureHandler(err => alert(emsg(err)))
+    .adminGet(TOKEN, x.id);
+}
+</script>
+</body>
+</html>
