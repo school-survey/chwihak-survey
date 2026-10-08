@@ -319,8 +319,9 @@ S.greeting.forEach(x => g.appendChild(el('p', '', x)));
 const sg = el('div', 'sign'); S.sign.forEach(x => sg.appendChild(el('div', '', x))); g.appendChild(sg);
 P.appendChild(g);
 const gd = el('div', 'box guide'); gd.appendChild(el('div', '', '※ 작성 안내'));
-S.guide.forEach(x => gd.appendChild(el('div', '', '○ ' + x)));
+S.guide.filter(x => !/^문의처/.test(x)).forEach(x => gd.appendChild(el('div', '', '○ ' + x)));
 gd.appendChild(el('div', '', '○ 입력 내용은 자동으로 저장되어, 같은 기관 ID로 로그인한 다른 담당자도 이어서 작성할 수 있습니다. 끝까지 작성한 뒤 맨 아래 「최종 제출」을 눌러 주십시오(기관당 한 번).'));
+S.guide.filter(x => /^문의처/.test(x)).forEach(x => gd.appendChild(el('div', '', '○ ' + x)));   // 문의처는 맨 아래
 P.appendChild(gd);
 S.items.forEach(it => {
   if (it.t === 'H') { P.appendChild(el('div', 'band', it.text)); SEC = it.text === '기본정보' ? '' : it.text.split('.')[0]; if (it.text === '기본정보') SEC = '기본정보'; return; }
