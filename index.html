@@ -585,15 +585,7 @@ function loadAdmin() {
       A.innerHTML = '';
       const h = el('div', 'ahead'); h.appendChild(el('span', '', TITLE + ' — 기관별 진행 현황 (' + r.rows.length + '개 기관)'));
       const rb = el('button', 'sm', '새로 고침'); rb.addEventListener('click', loadAdmin); h.appendChild(rb);
-      const tb = el('button', 'sm', '응답 탭 정리'); tb.title = '대상 탭·원자료 탭의 시험 줄을 지우고 1행을 문항 순서로 새로 씁니다';
-      tb.addEventListener('click', () => {
-        tb.disabled = true;
-        google.script.run.withSuccessHandler(r => {
-          const c = Object.entries(r.counts).map(([k, v]) => k + ' ' + v + '줄').join(' · ');
-          if (!confirm('응답 탭의 답변 줄을 모두 지우고 1행(열 이름)을 문항 순서대로 새로 씁니다.\n지금 들어 있는 답변 줄: ' + c + '\n\n시험 제출만 있을 때 쓰십시오. 진행하시겠습니까?')) { tb.disabled = false; return; }
-          google.script.run.withSuccessHandler(() => { tb.disabled = false; alert('정리했습니다. 「응답 시트 열기」로 확인하십시오.'); }).withFailureHandler(err => { tb.disabled = false; alert('실패: ' + emsg(err)); }).adminResetTabs(TOKEN, true);
-        }).withFailureHandler(err => { tb.disabled = false; alert('실패: ' + emsg(err)); }).adminResetTabs(TOKEN, false);
-      }); h.appendChild(tb);
+      // 「응답 탭 정리」 단추는 2026-10-12 조사 시작 뒤 제거(실제 응답까지 지우는 사고 방지). 서버 adminResetTabs 도 막아 둠 — 필요하면 Code.gs 참조
       const ib = el('button', 'sm', '계정 일괄 등록'); ib.addEventListener('click', () => { const box = document.getElementById('impbox'); box.style.display = box.style.display === 'none' ? '' : 'none'; }); h.appendChild(ib);
       const lk = el('a', 'sm', '응답 시트 열기'); lk.href = r.sheetUrl; lk.target = '_blank'; h.appendChild(lk);
       A.appendChild(h);
